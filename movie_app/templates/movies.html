@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang = en>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    {% load static %}
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='{% static "style.css" %}'>
+    <script src='main.js'></script>
+</head>
+<body>
+        <h1>Welcome, {{user.first_name}}!</h1>
+        {% for message in messages %}
+            <h4>{{message}}</h4>
+        {% endfor %}
+        <h3>Add a Movie:</h3>
+        <div id="upload_form">
+            <form action="/upload_movie" method="POST">
+            {% csrf_token %}
+                <label for="title">Title</label>
+                <input type="text" name="title" class="form-control">
+                <label for="year_released"> Year Released</label>
+                <input type="text" name="year_released" class="form-control">
+                <label for="desc">Description</label>
+                <input type="tex" name="desc" class="form-control">
+                <input type="submit" value="Add Movie" class="btn btn-primary">
+            </form>
+        </div>
+        <div id="home_page_content">
+            {% for movie in movies %}
+                <h3><a href="/display_movie/{{movie.id}}">{{movie.title}}</a></h3>
+                <p>Uploaded by {{user.first_name}} on {{movie.created_at}}</p>
+                {% if movie.uploaded_by.id == request.session.id%}
+                    <a href="/delete_movie/{{movie.id}}">Delete Movie</a>
+                {% endif %}
+                {% if movie in user.liked_movies.all %}
+                    <p>{{user.first_name}} likes this movie.</p>
+                    <a href="/remove_from_likes/{{movie.id}}">Remove From Likes</a>
+                {% else %} 
+                    <a href="/add_to_likes/{{movie.id}}">Add To Likes</a>
+                {% endif %}
+        {% endfor %}
+                
+    </div>
+        <a href="/logout">Logout</a>
+</body>
+</html>

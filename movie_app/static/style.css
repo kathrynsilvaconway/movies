@@ -1,0 +1,33 @@
+#wrap {
+    display: inline-block;
+}
+
+label, input {
+    margin: 5px;
+    display: block;
+}
+#reg {
+    width: 350px;
+
+}
+#login {
+    width: 300px;
+}
+
+#upload_form {
+    width: 300px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#home_page_content {
+    width: 300px;
+    display: inline-block;
+    margin-left: 40px;
+    margin-top: 60px;
+}
+
+.display_containers {
+    width: 300px;
+    display: inline-block;
+}
